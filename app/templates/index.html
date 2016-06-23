@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block stylesheets %}
+    <link href="/css/index.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <header>
+    </header>
+
+    <div class="content">
+        <h1></h1>
+
+        <button id="startRecord">Start</button>
+        <button id="endRecord">End</button>
+
+        <br>
+        <audio id="recordedAudio" controls>
+        Your browser does not support the audio element.
+        </audio>
+        <a id="downloadLink">download</a>
+    </div>
+
+    <form action="upload" method="post" enctype="multipart/form-data">
+        Select image to upload:
+        <input type="file" name="file" id="fileToUpload">
+        <input type="submit" value="Upload Image" name="submit">
+    </form>
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="/js/index.js" async></script>
+{% endblock %}
