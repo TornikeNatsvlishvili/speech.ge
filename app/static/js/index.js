@@ -7,9 +7,10 @@ var count = 0;
 var recording = false;
 var soundBlob;
 
-var downloadLink = document.querySelector('a#downloadLink'),
-    recordingStatusSpan = document.querySelector('#RecordingStatus'),
-    audioControls = document.querySelector("#AudioControls");
+var recordingStatusSpan = document.querySelector('#RecordingStatus'),
+    playbackSection = document.querySelector(".playback-section"),
+    recordingSection = document.querySelector(".recording-section")
+    recordBtn = document.querySelector("#Record");
 
 if (getBrowser() == "Chrome") {
     var constraints = {"audio": true, "video": false};
@@ -17,7 +18,7 @@ if (getBrowser() == "Chrome") {
     var constraints = {audio: true, video: false};
 }
 
-$('#Record').click(function () {
+$(recordBtn).click(function () {
     if(!recording){
         initiateRecording();
         recording = true;
@@ -27,7 +28,7 @@ $('#Record').click(function () {
     }
 });
 
-$('#uploadRecording').click(function(){
+$('#UploadRecording').click(function(){
     var fd = new FormData();
     fd.append('fname', 'test.wav');
     fd.append('file', soundBlob);
@@ -47,17 +48,20 @@ function initiateRecording() {
     if (typeof MediaRecorder === 'undefined' || !navigator.getUserMedia) {
         alert('Sorry! This demo requires Firefox 30 and up or Chrome 47 and up.');
     } else {
-        $('#Record span').removeClass('icon-record').addClass('icon-stop');
-        recordingStatusSpan.className = "";
+        $('#Record > span').removeClass('icon-record').addClass('icon-stop');
+        $('#Record > tag').html("გაჩერება");
+        $(recordingStatusSpan).removeClass("hidden");
         navigator.getUserMedia(constraints, startRecording, errorCallback);
     }
 }
 
 function endRecording(){
     mediaRecorder.stop()
-    $('#Record span').removeClass('icon-stop').addClass('icon-record');
-    recordingStatusSpan.className = "gone";
-    audioControls.className = "";
+    $('#Record > span').removeClass('icon-stop').addClass('icon-record');
+    $('#Record > tag').html("ჩაწერა");
+    $(recordingStatusSpan).addClass("hidden");
+    $(playbackSection).removeClass("gone");
+    $(recordingSection).addClass("gone");
 }
 
 function errorCallback(error){
@@ -97,18 +101,6 @@ function startRecording(stream) {
 
         soundBlob = new Blob(chunks, {type: "audio/mp4"});
         chunks = [];
-
-        var videoURL = window.URL.createObjectURL(soundBlob);
-
-        downloadLink.href = videoURL;
-        downloadLink.innerHTML = 'Download video file';
-
-        var rand = Math.floor((Math.random() * 10000000));
-        var name = "audio_" + rand + ".mp4";
-
-        downloadLink.setAttribute("download", name);
-        downloadLink.setAttribute("name", name);
-
     };
 
     mediaRecorder.onwarning = function (e) {
@@ -217,9 +209,12 @@ $pause.click(function(){
 })
 
 $delete.click(function(){
-    audio_playback.pause();
-    audio_playback = null;
-    audioControls.className = "gone";
+    if(audio_playback){
+        audio_playback.pause();
+        audio_playback = null;
+    }
+    $(playbackSection).addClass("gone");
+    $(recordingSection).removeClass("gone");
 })
 
 //$seek.bind("change", function(){

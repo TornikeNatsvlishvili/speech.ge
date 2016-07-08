@@ -13,11 +13,20 @@
     margin: 5px;
 }
 
-.recording {
+.voice-section {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.voice-section > :first-child{
+    padding: 15px 0 5px 0;
+}
+
+.playback-section {
+    display: flex;
+    flex-direction: row;
 }
 
 #RecordingStatus {
@@ -27,9 +36,11 @@
     padding: 10px 0;
 }
 
-#Upload {
+#UploadRecording {
     color: lightseagreen;
     font-size: 1.6em;
     border: 2px solid lightseagreen;
     padding: 4px;
+    width: 200px;
+    margin-top: 20px;
 }

@@ -19,50 +19,43 @@
         </h3>
 
         <h2 class="uppercase">ინსტრუქცია</h2>
-        <h4>დააჭირეთ ჩაწერის ნიშანს, და წაიკითხეთ შავი მუქი ტექსტი.</h4>
+        <h3>დააჭირეთ ჩაწერის ნიშანს, და წაიკითხეთ შავი მუქი ტექსტი.</h3>
 
         <h2 class="uppercase no-margin">სათქვამი ტექსტი</h2>
         <div id="TextToRead" class="uppercase bold">გამარჯობა როგრ ხარ?</div>
 
-        <div class="recording">
-            <button id="Record">
-                <span class="button icon-record invert"></span>
-            </button>
-            <span id="RecordingStatus" class="gone">მიმდინარეობს ჩაწერა...</span>
-            <br>
-            <div id="AudioControls" class="gone">
+        <div class="voice-section">
+            <h2 class="uppercase no-margin">კონტროლი</h2>
+
+            <div class="recording-section">
+                <button id="Record" class="item">
+                    <span class="button icon-record invert"></span>
+                    <tag>ჩაწერა</tag>
+                </button>
+            </div>
+
+            <div class="playback-section gone">
                 <!--<audio id="recordedAudio" controls>-->
                 <!--Your browser does not support the audio element.-->
                 <!--</audio>-->
 
                 <!--<input type="range" id="Seek" value="0" max=""/>-->
-                <button id="Play">
+                <button id="Play" class="item">
                     <span class="button icon-play invert"></span>
+                    <tag>დაკვრა</tag>
                 </button>
-                <button id="Delete">
+                <button id="Delete" class="item">
                     <span class="button icon-delete invert"></span>
+                    <tag>წაშლა</tag>
                 </button>
             </div>
 
-            <button id="Upload" class="uppercase bold">
-                ატვირთე!
+            <div id="RecordingStatus" class="hidden">მიმდინარეობს ჩაწერა...</div>
+
+            <button id="UploadRecording" class="uppercase bold">
+                ატვირთვა
             </button>
         </div>
-
-        <a id="downloadLink">download</a>
-        <button id="uploadRecording" style="background:red; padding: 20px">Upload</button>
-
-        <div class="submission">
-            <button id="upload">Upload</button>
-            <form action="upload" method="post" enctype="multipart/form-data">
-                Select image to upload:
-                <input type="file" name="file" id="fileToUpload">
-                <input type="submit" value="Upload Image" name="submit">
-            </form>
-        </div>
-
-
-
     </div>
 {% endblock %}
 
