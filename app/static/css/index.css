@@ -1,0 +1,35 @@
+.content {
+    text-align: center;
+}
+
+.logo {
+    width: 400px;
+}
+
+#TextToRead {
+    font-size: 5em;
+    background: #f3f3f3;
+    padding: 5px;
+    margin: 5px;
+}
+
+.recording {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#RecordingStatus {
+    color: red;
+    font-weight: 900;
+    font-size: 1.2em;
+    padding: 10px 0;
+}
+
+#Upload {
+    color: lightseagreen;
+    font-size: 1.6em;
+    border: 2px solid lightseagreen;
+    padding: 4px;
+}

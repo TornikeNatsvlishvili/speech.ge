@@ -4,9 +4,12 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
 var mediaRecorder;
 var chunks = [];
 var count = 0;
+var recording = false;
+var soundBlob;
 
-var recordedAudio = document.querySelector('audio#recordedAudio');
-var downloadLink = document.querySelector('a#downloadLink');
+var downloadLink = document.querySelector('a#downloadLink'),
+    recordingStatusSpan = document.querySelector('#RecordingStatus'),
+    audioControls = document.querySelector("#AudioControls");
 
 if (getBrowser() == "Chrome") {
     var constraints = {"audio": true, "video": false};
@@ -14,20 +17,47 @@ if (getBrowser() == "Chrome") {
     var constraints = {audio: true, video: false};
 }
 
-$('#startRecord').click(function () {
-    onBtnRecordClicked();
+$('#Record').click(function () {
+    if(!recording){
+        initiateRecording();
+        recording = true;
+    } else {
+        endRecording();
+        recording = false;
+    }
 });
 
-$('#endRecord').click(function () {
-    mediaRecorder.stop();
-});
+$('#uploadRecording').click(function(){
+    var fd = new FormData();
+    fd.append('fname', 'test.wav');
+    fd.append('file', soundBlob);
 
-function onBtnRecordClicked() {
+    $.ajax({
+        type: 'POST',
+        url: '/upload',
+        data: fd,
+        processData: false,
+        contentType: false
+    }).done(function(data) {
+       console.log(data);
+    });
+})
+
+function initiateRecording() {
     if (typeof MediaRecorder === 'undefined' || !navigator.getUserMedia) {
         alert('Sorry! This demo requires Firefox 30 and up or Chrome 47 and up.');
     } else {
+        $('#Record span').removeClass('icon-record').addClass('icon-stop');
+        recordingStatusSpan.className = "";
         navigator.getUserMedia(constraints, startRecording, errorCallback);
     }
+}
+
+function endRecording(){
+    mediaRecorder.stop()
+    $('#Record span').removeClass('icon-stop').addClass('icon-record');
+    recordingStatusSpan.className = "gone";
+    audioControls.className = "";
 }
 
 function errorCallback(error){
@@ -65,13 +95,12 @@ function startRecording(stream) {
     mediaRecorder.onstop = function () {
         console.log('Stopped, state = ' + mediaRecorder.state);
 
-        var blob = new Blob(chunks, {type: "audio/mp4"});
+        soundBlob = new Blob(chunks, {type: "audio/mp4"});
         chunks = [];
 
-        var videoURL = window.URL.createObjectURL(blob);
+        var videoURL = window.URL.createObjectURL(soundBlob);
 
         downloadLink.href = videoURL;
-        recordedAudio.src = videoURL;
         downloadLink.innerHTML = 'Download video file';
 
         var rand = Math.floor((Math.random() * 10000000));
@@ -148,7 +177,52 @@ function getBrowser() {
         majorVersion = parseInt(navigator.appVersion, 10);
     }
 
-
     return browserName;
-
 }
+
+
+/* PLAYER FUNCTIONALITY */
+var audio_playback;
+var $play = $('#Play'),
+    $pause = $("#Pause"),
+    $delete = $("#Delete");
+    //$seek = $("#Seek");
+
+$play.click(function(){
+    if(audio_playback){
+        audio_playback.play();
+    } else {
+
+        audio_playback = new Audio(window.URL.createObjectURL(soundBlob));
+
+        //TODO: Bug with durationchange
+
+        //audio_playback.addEventListener('durationchange', function() {
+        //    $seek.attr("max", audio_playback.duration);
+        //    console.log(audio_playback.duration);
+        //});
+        //audio_playback.addEventListener('timeupdate',function (){
+        //    curtime = parseInt(audio_playback.currentTime, 10);
+        //    console.log(curtime)
+        //    $seek.attr("value", curtime);
+        //});
+
+        audio_playback.load();
+        audio_playback.play();
+    }
+});
+
+$pause.click(function(){
+    audio_playback.pause();
+})
+
+$delete.click(function(){
+    audio_playback.pause();
+    audio_playback = null;
+    audioControls.className = "gone";
+})
+
+//$seek.bind("change", function(){
+//    audio_playback.currentTime = $(this).val();
+//    $seek.attr("max", audio_playback.duration);
+//})

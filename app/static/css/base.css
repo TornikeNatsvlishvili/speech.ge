@@ -1,0 +1,106 @@
+@font-face {
+    font-family: 'BPG Nateli';
+    src: url('../fonts/bpg-nateli-webfont.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/bpg-nateli-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/bpg-nateli-webfont.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../fonts/bpg-nateli-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+         url('../fonts/bpg-nateli-webfont.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/bpg-nateli-webfont.svg#bpg_nateliregular') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+    font-family: 'BPG Nateli Mtavruli';
+    src: url('../fonts/bpg-nateli-mtavruli-webfont.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/bpg-nateli-mtavruli-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/bpg-nateli-mtavruli-webfont.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../fonts/bpg-nateli-mtavruli-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+         url('../fonts/bpg-nateli-mtavruli-webfont.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/bpg-nateli-mtavruli-webfont.svg#bpg_nateli_mtavruliregular') format('svg'); /* Legacy iOS */
+}
+
+html {
+    background: #fff;
+    width: 960px;
+    margin: 20px auto 0;
+}
+
+body {
+    font-family: Arial, 'BPG Nateli', sans-serif;
+}
+
+.content {
+
+}
+
+button:hover {
+    background: rgba(80,80,80,.2);
+    cursor: pointer;
+}
+
+button {
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+/* Remove blue focus outline */
+button:focus { outline: none; }
+
+.button {
+    width: 45px;
+    height: 45px;
+    display:inline-block;
+    background-position: center;
+    background-size: contain;
+    border: 1px solid white;
+}
+
+.icon {
+    width: 45px;
+    height: 45px;
+    display:inline-block;
+    background-position: center;
+    background-size: contain;
+}
+
+.icon-stop {
+    background-image: url('/images/stop.gif');
+}
+
+.icon-play {
+    background-image: url('/images/play.gif');
+}
+
+.icon-pause {
+    background-image: url('/images/pause.gif');
+}
+
+.icon-record {
+    background-image: url('/images/record.gif');
+}
+
+.icon-delete {
+    background-image: url('/images/delete.gif');
+}
+
+/* Utilities */
+
+.bold {
+    font-weight: 900;
+}
+
+.uppercase {
+    font-family: Arial, 'BPG Nateli Mtavruli', sans-serif;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.gone {display: none}
+
+.sepia {-webkit-filter: sepia(100%); filter: sepia(100%);}
+
+.invert {-webkit-filter: invert(100%); filter: invert(100%);}
+
+.red {-webkit-filter: hue-rotate(180deg); filter: hue-rotate(180deg);}

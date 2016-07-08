@@ -9,24 +9,61 @@
     </header>
 
     <div class="content">
-        <h1></h1>
+        <h1 class="uppercase">ქართული მეტყველების ამოცნობისათვის <br> მონაცემების ბაზა</h1>
 
-        <button id="startRecord">Start</button>
-        <button id="endRecord">End</button>
+        <img class="logo" src="images/gwave_no.gif"/>
 
-        <br>
-        <audio id="recordedAudio" controls>
-        Your browser does not support the audio element.
-        </audio>
+        <h3>ამ საიტის მიზანია რომ შეაგროვოს ნათქვამი ქართული წინადადების კოლექცია. </h3>
+        <h3>ეს იდეა დაიბადა შემდეგი მოთხოვნილების გამო: რომ გავწვრთნათ ქართული მეტყველობის
+        ამომცნობელი საჭიროა ბევრი ნალაპარაკების ნიმუში რომელის შემცველობა უკვე ცნობილია.
+        </h3>
+
+        <h2 class="uppercase">ინსტრუქცია</h2>
+        <h4>დააჭირეთ ჩაწერის ნიშანს, და წაიკითხეთ შავი მუქი ტექსტი.</h4>
+
+        <h2 class="uppercase no-margin">სათქვამი ტექსტი</h2>
+        <div id="TextToRead" class="uppercase bold">გამარჯობა როგრ ხარ?</div>
+
+        <div class="recording">
+            <button id="Record">
+                <span class="button icon-record invert"></span>
+            </button>
+            <span id="RecordingStatus" class="gone">მიმდინარეობს ჩაწერა...</span>
+            <br>
+            <div id="AudioControls" class="gone">
+                <!--<audio id="recordedAudio" controls>-->
+                <!--Your browser does not support the audio element.-->
+                <!--</audio>-->
+
+                <!--<input type="range" id="Seek" value="0" max=""/>-->
+                <button id="Play">
+                    <span class="button icon-play invert"></span>
+                </button>
+                <button id="Delete">
+                    <span class="button icon-delete invert"></span>
+                </button>
+            </div>
+
+            <button id="Upload" class="uppercase bold">
+                ატვირთე!
+            </button>
+        </div>
+
         <a id="downloadLink">download</a>
+        <button id="uploadRecording" style="background:red; padding: 20px">Upload</button>
+
+        <div class="submission">
+            <button id="upload">Upload</button>
+            <form action="upload" method="post" enctype="multipart/form-data">
+                Select image to upload:
+                <input type="file" name="file" id="fileToUpload">
+                <input type="submit" value="Upload Image" name="submit">
+            </form>
+        </div>
+
+
+
     </div>
-
-    <form action="upload" method="post" enctype="multipart/form-data">
-        Select image to upload:
-        <input type="file" name="file" id="fileToUpload">
-        <input type="submit" value="Upload Image" name="submit">
-    </form>
-
 {% endblock %}
 
 {% block javascript %}
