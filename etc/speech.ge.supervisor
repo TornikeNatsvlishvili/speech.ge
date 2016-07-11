@@ -1,0 +1,7 @@
+[program:speech.ge]
+command=/var/projects/speech.ge/env/python3.5 run.py http
+directory=/var/projects/speech.ge
+autostart=true
+atuorestart=true
+stdout_logfile=/var/log/speech.ge/stdout.log
+stderr_logfile=/var/log/speech.ge/stderr.log
