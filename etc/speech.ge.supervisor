@@ -1,5 +1,5 @@
 [program:speech.ge]
-command=/var/projects/speech.ge/env/python3.5 run.py http
+command=/var/projects/speech.ge/env/bin/python3.5 run.py http
 directory=/var/projects/speech.ge
 autostart=true
 atuorestart=true
