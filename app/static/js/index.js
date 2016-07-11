@@ -31,6 +31,7 @@ $(recordBtn).click(function () {
 $('#UploadRecording').click(function(){
     var fd = new FormData();
     fd.append('file', soundBlob, "recording.opus");
+    fd.append('sentence', $("#TextToRead").html());
 
     $.ajax({
         type: 'POST',
@@ -38,8 +39,8 @@ $('#UploadRecording').click(function(){
         data: fd,
         processData: false,
         contentType: false
-    }).done(function(data) {
-       console.log(data);
+    }).done(function(resp) {
+        $("#UploadStatus").html(resp.status);
     });
 })
 

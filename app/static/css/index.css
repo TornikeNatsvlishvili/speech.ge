@@ -50,3 +50,7 @@
 #UploadRecording:hover {
     color: #ddd;
 }
+
+#UploadRecording:active {
+    color: #2C7976;
+}
