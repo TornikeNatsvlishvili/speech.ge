@@ -8,9 +8,9 @@ var recording = false;
 var soundBlob;
 
 var recordingStatusSpan = document.querySelector('#RecordingStatus'),
-    playbackSection = document.querySelector(".playback-section"),
-    recordingSection = document.querySelector(".recording-section")
-    recordBtn = document.querySelector("#Record");
+    recordBtn = document.querySelector("#Record"),
+    playBtn = document.querySelector("#Play"),
+    deleteBtn = document.querySelector("#Delete");
 
 if (getBrowser() == "Chrome") {
     var constraints = {"audio": true, "video": false};
@@ -30,8 +30,7 @@ $(recordBtn).click(function () {
 
 $('#UploadRecording').click(function(){
     var fd = new FormData();
-    fd.append('fname', 'test.wav');
-    fd.append('file', soundBlob);
+    fd.append('file', soundBlob, "recording.opus");
 
     $.ajax({
         type: 'POST',
@@ -60,8 +59,8 @@ function endRecording(){
     $('#Record > span').removeClass('icon-stop').addClass('icon-record');
     $('#Record > tag').html("ჩაწერა");
     $(recordingStatusSpan).addClass("hidden");
-    $(playbackSection).removeClass("gone");
-    $(recordingSection).addClass("gone");
+    enable([playBtn, deleteBtn])
+    disable([recordBtn])
 }
 
 function errorCallback(error){
@@ -99,7 +98,7 @@ function startRecording(stream) {
     mediaRecorder.onstop = function () {
         console.log('Stopped, state = ' + mediaRecorder.state);
 
-        soundBlob = new Blob(chunks, {type: "audio/mp4"});
+        soundBlob = new Blob(chunks, {type: 'audio/ogg; codecs=opus' });
         chunks = [];
     };
 
@@ -176,15 +175,16 @@ function getBrowser() {
 /* PLAYER FUNCTIONALITY */
 var audio_playback;
 var $play = $('#Play'),
-    $pause = $("#Pause"),
+    //$pause = $("#Pause"),
     $delete = $("#Delete");
     //$seek = $("#Seek");
 
 $play.click(function(){
     if(audio_playback){
+        audio_playback.pause();
+        audio_playback.currentTime = 0;
         audio_playback.play();
     } else {
-
         audio_playback = new Audio(window.URL.createObjectURL(soundBlob));
 
         //TODO: Bug with durationchange
@@ -198,26 +198,41 @@ $play.click(function(){
         //    console.log(curtime)
         //    $seek.attr("value", curtime);
         //});
+        audio_playback.addEventListener('ended', function(){
+            $('#Play > span').removeClass('icon-replay').addClass('icon-play');
+        });
 
         audio_playback.load();
         audio_playback.play();
     }
-});
+    $('#Play > span').removeClass('icon-play').addClass('icon-replay');
 
-$pause.click(function(){
-    audio_playback.pause();
-})
+});
 
 $delete.click(function(){
     if(audio_playback){
         audio_playback.pause();
         audio_playback = null;
     }
-    $(playbackSection).addClass("gone");
-    $(recordingSection).removeClass("gone");
+    disable([playBtn, deleteBtn])
+    enable([recordBtn])
 })
 
 //$seek.bind("change", function(){
 //    audio_playback.currentTime = $(this).val();
 //    $seek.attr("max", audio_playback.duration);
 //})
+
+function disable(idList) {
+    idList.forEach(function(item){
+        $(item).addClass('disabled');
+        $(item).prop('disabled', true);
+    });
+}
+
+function enable(idList){
+    idList.forEach(function(item){
+        $(item).removeClass('disabled');
+        $(item).prop('disabled', false);
+    })
+}

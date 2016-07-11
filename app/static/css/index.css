@@ -24,9 +24,8 @@
     padding: 15px 0 5px 0;
 }
 
-.playback-section {
+.recording-section {
     display: flex;
-    flex-direction: row;
 }
 
 #RecordingStatus {
@@ -37,10 +36,17 @@
 }
 
 #UploadRecording {
-    color: lightseagreen;
+    /*color: lightseagreen;*/
+    /*border: 2px solid lightseagreen;*/
+    border: none;
+    color: white;
+    background: lightseagreen;
     font-size: 1.6em;
-    border: 2px solid lightseagreen;
     padding: 4px;
     width: 200px;
     margin-top: 20px;
+}
+
+#UploadRecording:hover {
+    color: #ddd;
 }
